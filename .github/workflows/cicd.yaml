@@ -1,0 +1,69 @@
+name: "CICD"
+
+on:
+  push:
+    branches:
+      - '**'
+  workflow_call:
+  workflow_dispatch:
+      
+jobs:
+
+  setup:
+    runs-on: self-hosted
+    environment: 'dev'
+    steps:
+      - uses: actions/checkout@v2
+        name: "Checkout code"
+
+  build:
+    runs-on: self-hosted
+    environment: 'dev'
+    needs: setup
+    outputs:
+      build-id: ${{ steps.build.outputs.build-id }}
+    steps:
+      - uses: ./.github/actions/build-container
+        name: "Build container image"
+        id: build
+
+  run:
+    runs-on: self-hosted
+    environment: 'dev'
+    needs: build
+    outputs:
+      run-all-opts-port: ${{ steps.run-all-opts.outputs.port }}
+      run-all-opts-name: ${{ steps.run-all-opts.outputs.name }}
+    steps:
+      - uses: ./.github/actions/run-container-all-opts
+        name: "Run container"
+        id: run-all-opts
+        with:
+          build-id: ${{ needs.build.outputs.build-id }}
+      - uses: ./.github/actions/wait
+        name: "Wait for the containers to start"
+
+  test:
+    runs-on: self-hosted
+    environment: 'dev'
+    needs: [build, run]
+    steps:
+      - uses: ./.github/actions/tests/ads
+        name: "Test if Apache Directory Studio has started"
+        with:
+          name: ${{ needs.run.outputs.run-all-opts-name }}
+      - uses: ./.github/actions/tests/vnc
+        name: "Test if TightVNC has started"
+        with:
+          name: ${{ needs.run.outputs.run-no-opts-name }}
+
+  cleanup:
+    runs-on: self-hosted
+    environment: 'dev'
+    needs: [build, run, test]
+    if: always()
+    steps:
+      - uses: ./.github/actions/cleanup
+        with: 
+          images: apache-directory-studio:${{ needs.build.outputs.build-id }}
+          containers: apache-directory-studio-${{ needs.run.outputs.run-all-opts-name }} 

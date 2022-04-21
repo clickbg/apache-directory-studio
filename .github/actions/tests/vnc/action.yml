@@ -1,0 +1,11 @@
+inputs:
+  name:
+    description: 'Container Name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Test if TightVNC has started"
+      run: docker exec apache-directory-studio-${{ inputs.name }} pgrep Xtightvnc
+      shell: bash

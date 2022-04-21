@@ -1,0 +1,6 @@
+runs:
+  using: "composite"
+  steps:
+    - name: "Wait for 30s"
+      run: sleep 30s
+      shell: bash

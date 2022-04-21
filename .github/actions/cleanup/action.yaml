@@ -1,0 +1,14 @@
+inputs:
+  images:
+    description: 'List of images to delete'
+    required: true
+  containers:
+    description: 'List of containers to delete'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Delete test images"
+      run: docker rm -f ${{ inputs.containers }} && docker rmi -f ${{ inputs.images }} 
+      shell: bash

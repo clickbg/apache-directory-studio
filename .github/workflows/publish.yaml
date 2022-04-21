@@ -1,0 +1,42 @@
+name: "PUBLISH"
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    secrets:
+      DOCKER_USERNAME:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
+  workflow_run:
+    workflows: ["CICD"]
+    types:
+      - completed
+    branches:
+        - 'main'
+
+jobs:
+
+  publish:
+    runs-on: self-hosted
+    environment: prod
+    steps:
+    - name: "Checkout code"
+      uses: actions/checkout@v2
+    - name: "Delete old images"
+      run: docker rmi -f homekit-monitord nginx; exit 0
+    - name: "Login to docker hub"
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+    - name: "Install buildx"
+      id: buildx
+      uses: crazy-max/ghaction-docker-buildx@v1
+      with:
+        buildx-version: latest
+    - name: "Build and push the image"
+      run: |
+        docker buildx build --push \
+          --tag clickbg/apache-directory-studio:latest \
+          --platform linux/arm/v7,linux/arm64/v8,linux/amd64 .

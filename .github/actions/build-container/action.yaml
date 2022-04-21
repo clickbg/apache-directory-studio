@@ -1,0 +1,17 @@
+outputs:
+  build-id: 
+    description: "Build id"
+    value: ${{ steps.build-id.outputs.id }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Checkout code"
+      uses: actions/checkout@v2
+    - name: "Generate build id"
+      id: build-id
+      run: echo "::set-output name=id::$(( ((RANDOM<<15)|RANDOM) % 49152 + 10000 ))"
+      shell: bash
+    - name: "Build the container locally"
+      run: docker build -t apache-directory-studio:${{ steps.build-id.outputs.id }} .
+      shell: bash

@@ -1,0 +1,35 @@
+name: "UPDATE"
+
+on:
+  schedule:
+    - cron: "0 13 * * 1"
+  workflow_dispatch:
+
+jobs:
+
+  update-check:
+    runs-on: self-hosted
+    environment: 'dev'
+    outputs:
+      image-needs-updating: ${{ steps.check.outputs.needs-updating }}
+    steps:
+    - name: Docker Image Update Checker
+      id: check
+      uses: lucacome/docker-image-update-checker@v1
+      with:
+        base-image: library/ubuntu:latest
+        image: clickbg/apache-directory-studio:latest
+
+  cicd:
+    needs: update-check
+    if: ${{ needs.update-check.outputs.image-needs-updating == 'true' }}
+    uses: clickbg/apache-directory-studio/.github/workflows/cicd.yaml@main
+
+  publish:
+    needs: cicd
+    uses: clickbg/apache-directory-studio/.github/workflows/publish.yaml@main
+    with:
+      environment: prod
+    secrets:
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}

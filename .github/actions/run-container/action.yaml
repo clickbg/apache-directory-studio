@@ -1,0 +1,23 @@
+inputs:
+  build-id:
+    description: 'Build id'
+    required: true
+
+outputs:
+  port:
+    description: "Container Port"
+    value: ${{ steps.gen_port.outputs.port }}
+  name:
+    description: "Container Name"
+    value: ${{ steps.gen_port.outputs.port }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Generate port number"
+      id: gen_port
+      run: echo "::set-output name=port::$(( ((RANDOM<<15)|RANDOM) % 49152 + 10000 ))"
+      shell: bash
+    - name: "Run the container locally"
+      run: docker run --name apache-directory-studio-${{ steps.gen_port.outputs.port }} -d -p '127.0.0.1:${{ steps.gen_port.outputs.port }}:5901' apache-directory-studio:${{ inputs.build-id }}  
+      shell: bash
