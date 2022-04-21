@@ -28,7 +28,7 @@ RUN touch /root/.xsession
 # Download and install Apache Directory Studio
 WORKDIR /root
 RUN wget --no-check-certificate -r --accept-regex='2.*' --reject-regex 'update' -A 'ApacheDirectoryStudio*linux*.tar.gz' https://dlcdn.apache.org/directory/studio/
-RUN tar -xvf $(find ~+ ./dlcdn.apache.org -name '*linux*tar.gz') -C /root/
+RUN tar -xf $(find ~+ ./dlcdn.apache.org -name '*linux*tar.gz') -C /root/
 RUN rm -rf /root/dlcdn.apache.org
 
 ADD entrypoint.sh /
