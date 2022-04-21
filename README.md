@@ -76,3 +76,5 @@ Install [TightVNC for Windows](https://www.tightvnc.com/download.php) or [RealVN
 1. Open the VNC client app 
 2. Navigate to `vnc://127.0.0.1:5901`
 3. Enter password: **root**
+
+
