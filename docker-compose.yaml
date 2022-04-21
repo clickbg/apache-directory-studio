@@ -1,0 +1,8 @@
+version: '3.6'
+services:
+
+  apache-directory-studio:
+    container_name: apache-directory-studio
+    image: clickbg/apache-directory-studio:latest 
+    ports:
+      - "127.0.0.1:5901:5901"
