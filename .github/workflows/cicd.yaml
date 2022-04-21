@@ -35,7 +35,7 @@ jobs:
       run-all-opts-port: ${{ steps.run-all-opts.outputs.port }}
       run-all-opts-name: ${{ steps.run-all-opts.outputs.name }}
     steps:
-      - uses: ./.github/actions/run-container-all-opts
+      - uses: ./.github/actions/run-container
         name: "Run container"
         id: run-all-opts
         with:
