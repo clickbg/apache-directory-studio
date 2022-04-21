@@ -55,7 +55,7 @@ jobs:
       - uses: ./.github/actions/tests/vnc
         name: "Test if TightVNC has started"
         with:
-          name: ${{ needs.run.outputs.run-no-opts-name }}
+          name: ${{ needs.run.outputs.run-all-opts-name }}
 
   cleanup:
     runs-on: self-hosted
