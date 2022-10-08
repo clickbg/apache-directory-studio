@@ -18,7 +18,7 @@ Apache Directory Studio is a complete directory tooling platform intended to be 
 
 **Requirements**
 --
-Docker host running on amd64, armv7 or arm64 - Raspberry Pi or any modern Intel/AMD powered computer or VM
+Docker host running on amd64
 
 **Usage**
 --
