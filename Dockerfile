@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
 RUN ln -s /usr/bin/dpkg-split /usr/sbin/dpkg-split
 RUN ln -s /usr/bin/dpkg-deb /usr/sbin/dpkg-deb
@@ -26,10 +26,10 @@ RUN printf "root" | vncpasswd -f > /root/.vnc/passwd \
 RUN touch /root/.xsession
 
 # Download and install Apache Directory Studio
+ADD download_directory_studio.sh /root/
 WORKDIR /root
-RUN wget --no-check-certificate -r --accept-regex='2.*' --reject-regex 'update' -A 'ApacheDirectoryStudio*linux*.tar.gz' https://dlcdn.apache.org/directory/studio/
-RUN tar -xf $(find ~+ ./dlcdn.apache.org -name '*linux*tar.gz') -C /root/
-RUN rm -rf /root/dlcdn.apache.org
+RUN chmod 700 ./download_directory_studio.sh
+RUN ./download_directory_studio.sh
 
 ADD entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]

@@ -39,4 +39,5 @@ jobs:
       run: |
         docker buildx build --push \
           --tag clickbg/apache-directory-studio:latest \
-          --platform linux/arm/v7,linux/arm64/v8,linux/amd64 .
+          --tag clickbg/apache-directory-studio:stable \
+          --platform linux/amd64 .

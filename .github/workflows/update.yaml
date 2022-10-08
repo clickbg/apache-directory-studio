@@ -17,7 +17,7 @@ jobs:
       id: check
       uses: lucacome/docker-image-update-checker@v1
       with:
-        base-image: library/ubuntu:latest
+        base-image: library/ubuntu:22.04
         image: clickbg/apache-directory-studio:latest
 
   cicd:
