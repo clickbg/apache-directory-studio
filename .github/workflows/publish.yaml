@@ -25,7 +25,7 @@ jobs:
     environment: prod
     steps:
     - name: "Checkout code"
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: "Delete old images"
       run: docker rmi -f apache-directory-studio ubuntu ; exit 0
     - name: "Login to docker hub"
