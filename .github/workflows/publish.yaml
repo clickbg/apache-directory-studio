@@ -11,12 +11,6 @@ on:
         required: true
       DOCKER_PASSWORD:
         required: true
-  workflow_run:
-    workflows: ["CICD"]
-    types:
-      - completed
-    branches:
-        - 'main'
 
 jobs:
 

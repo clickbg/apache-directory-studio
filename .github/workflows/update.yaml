@@ -26,6 +26,7 @@ jobs:
     uses: clickbg/apache-directory-studio/.github/workflows/cicd.yaml@main
 
   publish:
+    needs: cicd
     uses: clickbg/apache-directory-studio/.github/workflows/publish.yaml@main
     with:
       environment: prod
