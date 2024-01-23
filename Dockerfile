@@ -7,6 +7,7 @@ RUN ln -s /bin/tar /usr/sbin/tar
 
 # Install packages that we need
 ENV DEBIAN_FRONTEND=noninteractive
+RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 RUN apt-get update \
     && apt-get install -y xserver-xorg \
     && apt-get install -y tightvncserver \
