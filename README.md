@@ -2,8 +2,8 @@
 # apache-directory-studio
 
 
-[![CICD](https://github.com/clickbg/apache-directory-studio/workflows/CICD/badge.svg?branch=main)](https://github.com/clickbg/apache-directory-studio/actions/workflows/cicd.yaml)
-[![UPDATE](https://github.com/clickbg/apache-directory-studio/workflows/UPDATE/badge.svg?branch=main)](https://github.com/clickbg/apache-directory-studio/actions/workflows/update.yaml)
+[![CICD](https://github.com/clickbg/apache-directory-studio/workflows/CICD/badge.svg)](https://github.com/clickbg/apache-directory-studio/actions/workflows/cicd.yaml)
+[![UPDATE](https://github.com/clickbg/apache-directory-studio/workflows/UPDATE/badge.svg)](https://github.com/clickbg/apache-directory-studio/actions/workflows/update.yaml)
 [![PUBLISH](https://github.com/clickbg/apache-directory-studio/workflows/PUBLISH/badge.svg)](https://github.com/clickbg/apache-directory-studio/actions/workflows/publish.yaml)
 
 <img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" width="20" height="20"> [Avaliable on DockerHub](https://hub.docker.com/r/clickbg/apache-directory-studio)
